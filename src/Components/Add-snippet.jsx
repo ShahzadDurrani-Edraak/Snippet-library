@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 const AddSnippet = ({ onChangeContent }) => {
   function handleAdd() {
     const selection = document.getElementById("snippet-language");
@@ -19,9 +21,11 @@ const AddSnippet = ({ onChangeContent }) => {
 
   return (
     <>
-      <div className="container mt-5 mb-5">
+      <div className="container container-add">
         <div className="row d-flex justify-content-center">
-          <a onClick={onChangeContent}>Back Home</a>
+          <Link to="/" className="btn-back">
+            Back to home
+          </Link>
           <form>
             <div className="row mb-3">
               <label htmlFor="inputEmail3" className="col-sm-2 col-form-label">

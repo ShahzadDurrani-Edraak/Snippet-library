@@ -1,3 +1,6 @@
+a {
+  text-decoration: none !important;
+}
 .container-snippet {
   border: 1px solid #dee2e6;
   border-radius: 5px;
@@ -112,6 +115,16 @@
   display: block;
   color: white;
   text-decoration: none;
+}
+.btn-back {
+  color: #3e64ff;
+  margin-bottom: 40px;
+}
+.btn-addSnippet {
+  background-color: #ffff;
+  color: #3e64ff !important;
+  padding: 8px 40px 8px 30px !important;
+  border-radius: 8px;
 }
 @media (prefers-reduced-motion: reduce) {
   #sidebar .logo {

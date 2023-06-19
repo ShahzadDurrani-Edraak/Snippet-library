@@ -4,6 +4,7 @@ import NavBar from "./Navbar";
 import Content from "./Content";
 import Single from "./Single";
 import AddSnippet from "./Add-snippet";
+import { Outlet } from "react-router-dom";
 
 const Home = () => {
   const [content, setContent] = useState("home");
@@ -70,11 +71,7 @@ const Home = () => {
         {/* Page Content  */}
         <div id="content" className="p-4 p-md-5 col-md-10">
           <NavBar></NavBar>
-          {content === "home" ? (
-            <Content></Content>
-          ) : (
-            <AddSnippet onChangeContent={changeContentHome}> </AddSnippet>
-          )}
+          <Outlet />
         </div>
       </div>
     </>

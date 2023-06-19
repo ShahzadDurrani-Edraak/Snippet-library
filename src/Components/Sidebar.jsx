@@ -11,8 +11,8 @@ const Sidebar = ({ onChangeContent }) => {
       <ul className="list-unstyled components mb-5">
         <li className="active">
           <div className="list-heading">
-            <Link onClick={onChangeContent}>
-              <span className="fa fa-home"></span>
+            <Link to="/add" className="btn-addSnippet">
+              <span className="fa fa-plus"></span>
               Add Snippet
             </Link>
           </div>
