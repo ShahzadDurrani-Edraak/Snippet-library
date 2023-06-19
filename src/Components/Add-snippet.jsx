@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import json from "./json/Snippets.json";
 
 const AddSnippet = ({ onChangeContent }) => {
   function handleAdd() {
@@ -17,6 +18,25 @@ const AddSnippet = ({ onChangeContent }) => {
       ? div_snippet.insertAdjacentHTML("beforeend", snippet)
       : document.getElementById("snippet-language").focus();
     selection_value = "";
+  }
+
+  function writeJson() {
+    const data = [
+      {
+        id: 1,
+        image: "/Images/code.jpg",
+        title: "Snippet ADD",
+        description: "Lorem ",
+        category: "ADD",
+        codes: [
+          {
+            id: 55,
+            language: "55",
+            code: "code 55",
+          },
+        ],
+      },
+    ];
   }
 
   return (
@@ -96,6 +116,7 @@ const AddSnippet = ({ onChangeContent }) => {
             <button
               type="submit"
               className="btn btn-primary float-end btn-post"
+              onClick={writeJson}
             >
               Post
             </button>

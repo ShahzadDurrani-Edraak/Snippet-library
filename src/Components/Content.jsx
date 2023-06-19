@@ -8,18 +8,12 @@ const Content = () => {
         <div className="row">
           {/* Single product */}
           {Snippets.map((snippet) => (
-            <div className="col-md-6 col-lg-4 col-xl-3">
+            <div className="col-md-6 col-lg-4 col-xl-3" key={snippet.id}>
               <Link to={`/snippet/${snippet.id}`}>
                 <div id="product-1" className="single-product">
                   <div className="part-1">
+                    <img src={snippet.image} alt="snippet-image"></img>
                     <span className="new">HTML</span>
-                    <ul>
-                      <li>
-                        <a href="#">
-                          <i class="fa-regular fa-copy"></i>
-                        </a>
-                      </li>
-                    </ul>
                   </div>
                   <div className="part-2">
                     <h3 className="product-title">{snippet.title}</h3>

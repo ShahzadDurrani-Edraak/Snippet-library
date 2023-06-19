@@ -8,33 +8,38 @@ import { useState } from "react";
 const Single = () => {
   const { id } = useParams();
   const curr_snippet = Snippets.find((snippet) => snippet.id == id);
-  const { title, description, image } = curr_snippet;
+  const { title, description, image, codes } = curr_snippet;
   const [copy, setCopy] = useState("false");
-  const codeString = `<pre className="snippet-preview">
-<small class="snippetTag">HTML</small>
-Lorem Ipsum is simply dummy text of the printing and typesetting
-industry. Lorem Ipsum has been the industry's standard dummy text
-ever since <br />
-the 1500s, when an unknown printer took a galley of type and
-scrambled it to make a type specimen book. It has survived not
-only five centuries,
-<br />
-but also the leap into electronic typesetting, remaining
-essentially unchanged. It was popularised in the 1960s with the
-release <br />
-of Letraset sheets containing Lorem Ipsum passages, and more
-recently with desktop publishing software like <br />
-Aldus PageMaker including versions of Lorem Ipsum.
-</pre>`;
 
-  const handleCopy = () => {
-    console.log(copy);
-    navigator.clipboard.writeText(codeString);
-    setCopy(true);
+  //const handleCopy = (id) => {
+  //  console.log(copy);
+  //  const curr_code = codes.find((code) => code.id == id);
+  //  navigator.clipboard.writeText(curr_code.code);
+  // setCopy(true);
+  //  setTimeout(() => {
+  //    setCopy(false);
+  //  }, 100);
+  // };
+
+  const handleCopy = (id) => {
+    setCopy((prevCopy) => {
+      const updatedCopy = { ...prevCopy }; // Create a shallow copy of the copy state
+      updatedCopy[id] = true; // Set the copy state for the specified code snippet to true
+      return updatedCopy;
+    });
+
+    const curr_code = codes.find((code) => code.id == id);
+    navigator.clipboard.writeText(curr_code.code);
+
     setTimeout(() => {
-      setCopy(false);
+      setCopy((prevCopy) => {
+        const updatedCopy = { ...prevCopy }; // Create a shallow copy of the copy state
+        updatedCopy[id] = false; // Set the copy state for the specified code snippet back to false
+        return updatedCopy;
+      });
     }, 100);
   };
+
   return (
     <div className="container">
       <div className="row">
@@ -46,32 +51,35 @@ Aldus PageMaker including versions of Lorem Ipsum.
             </div>
             <h1 className="snippet-title">{title}</h1>
             <p className="snippet-description">{description}</p>
-            <div className="snippetCode">
-              <div className="code-heeader d-flex justify-content-between items-center">
-                <p className="text-sm">Html</p>
-                {copy ? (
-                  <button
-                    className="inline-flex items-center gap-1"
-                    onClick={handleCopy}
-                  >
-                    <span className="fa-regular fa-clipboard"></span>
-                    copy code
-                  </button>
-                ) : (
-                  <button className="inline-flex items-center gap-1">
-                    <span className="fa-solid fa-check"></span>
-                    copied
-                  </button>
-                )}
+
+            {codes.map((code) => (
+              <div className="snippetCode">
+                <div className="code-heeader d-flex justify-content-between items-center">
+                  <p className="text-sm">{code.language}</p>
+                  {copy[code.id] ? (
+                    <button
+                      className="inline-flex items-center gap-1"
+                      onClick={() => handleCopy(code.id)}
+                    >
+                      <span className="fa-regular fa-clipboard"></span>
+                      copy code
+                    </button>
+                  ) : (
+                    <button className="inline-flex items-center gap-1">
+                      <span className="fa-solid fa-check"></span>
+                      copied
+                    </button>
+                  )}
+                </div>
+                <SyntaxHighlighter
+                  language={code.language}
+                  customStyle={{ padding: "25px" }}
+                  wrapLongLines={true}
+                >
+                  {code.code}
+                </SyntaxHighlighter>
               </div>
-              <SyntaxHighlighter
-                language="jsx"
-                customStyle={{ padding: "25px" }}
-                wrapLongLines={true}
-              >
-                {codeString}
-              </SyntaxHighlighter>
-            </div>
+            ))}
           </div>
         </div>
       </div>
