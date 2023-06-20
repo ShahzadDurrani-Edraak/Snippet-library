@@ -53,7 +53,7 @@ const Single = () => {
             <p className="snippet-description">{description}</p>
 
             {codes.map((code) => (
-              <div className="snippetCode">
+              <div className="snippetCode" key={code.id}>
                 <div className="code-heeader d-flex justify-content-between items-center">
                   <p className="text-sm">{code.language}</p>
                   {copy[code.id] ? (

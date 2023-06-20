@@ -1,6 +1,6 @@
-import { Outlet, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
-const Sidebar = ({ onChangeContent }) => {
+const Sidebar = () => {
   return (
     <nav id="sidebar">
       <h1>
@@ -19,7 +19,7 @@ const Sidebar = ({ onChangeContent }) => {
         </li>
         <li className="active">
           <div className="list-heading">
-            <a href="">
+            <a href="#">
               <span className="fa fa-home"></span>
               Categories
             </a>

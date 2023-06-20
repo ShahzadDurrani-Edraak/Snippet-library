@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import json from "./json/Snippets.json";
 
 const AddSnippet = ({ onChangeContent }) => {
   function handleAdd() {

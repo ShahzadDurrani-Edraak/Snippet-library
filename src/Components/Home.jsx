@@ -1,20 +1,14 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, createContext } from "react";
 import Sidebar from "./Sidebar";
 import NavBar from "./Navbar";
-import Content from "./Content";
-import Single from "./Single";
-import AddSnippet from "./Add-snippet";
 import { Outlet } from "react-router-dom";
+import { fetchData } from "../api/api";
+
+export const dataContext = createContext("");
 
 const Home = () => {
-  const [content, setContent] = useState("home");
+  const [data, setData] = useState("");
 
-  const changeContentAdd = () => {
-    setContent("add");
-  };
-  const changeContentHome = () => {
-    setContent("home");
-  };
   //Windows height adjustment
   const fullHeight = () => {
     const elements = document.querySelectorAll(".js-fullheight");
@@ -42,13 +36,22 @@ const Home = () => {
       event.preventDefault();
     }
   };
+  async function fetchDataAsync() {
+    try {
+      const response = await fetchData();
+      setData(response);
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   useEffect(() => {
     // Height function call
     fullHeight();
+    fetchDataAsync();
 
     const cmd_icons = document.getElementById("search_cmd");
-    if (navigator.userAgent.indexOf("Mac OS X") != -1) {
+    if (navigator.userAgent.indexOf("Mac OS X") !== -1) {
       cmd_icons.innerHTML = "⌘ k";
     } else {
       cmd_icons.innerHTML = "ctrl + k";
@@ -67,11 +70,13 @@ const Home = () => {
   return (
     <>
       <div className="wrapper d-flex align-items-stretch js-fullheight">
-        <Sidebar onChangeContent={changeContentAdd}></Sidebar>
+        <Sidebar></Sidebar>
         {/* Page Content  */}
         <div id="content" className="p-4 p-md-5 col-md-10">
           <NavBar></NavBar>
-          <Outlet />
+          <dataContext.Provider value={[data, setData]}>
+            <Outlet />
+          </dataContext.Provider>
         </div>
       </div>
     </>
